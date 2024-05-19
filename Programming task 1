@@ -1,12 +1,15 @@
 Programming Task #1
 
 A comment at the top of the file introducing how the code works (to a beginner) and why it works (i.e. the intuition).
-    The purpose of this code is to take a given list of digits such as [1,2,2,3,4] and output an integer representing the list i.e. 12234. We first set and initialize 
+- Comment and documentation that explain the purpose of sections/lines of code where appropriate.
+- Code to execute the function, with some examples or test cases demonstrating that it works.
+
+ The purpose of this code is to take a given list of digits such as [1,2,2,3,4] and output an integer representing the list i.e. 12234. We first set and initialize 
 the final number we want as 0 at the start of our program, which we will then progressively add to it in order to reach the desired output. In basic mathematics, how would we get
 to the number 12234 just by using the digits 1,2,2,3,4? We multiply the digit in the first column by 10^4 because it is in the '10 thousands column', the digit in the second column
 by 10^3 because it is in the 'thousands column' and so forth until we multiply the digit in the last column by 10^0 which is 1. By basic arithmetic, the resulting number after adding
 up all these products together will equal 12234(the number that we want). We can use this method for any given list of digits to get an integer representing these digits. 
-Eg: from [1,2,2,3,4] to 12234 or from [1,3,6,7,4,4,0] to 1367440.
+Eg: from [1,2,2,3,4] to 12234 or from [1,3,6,7,4,4,0] to 1367440. This method is demonstrated in the code below.
 
 # Assign the list of digits to a variable num_list
 num_list = [1,2,2,3,4]
@@ -14,24 +17,40 @@ num_list = [1,2,2,3,4]
 # Initialise the final number as 0, which we will then add to it as the program progresses
 final_number = 0
 
-# Initialise a variable i as 0 (this variable will help us when executing a for loop in the later stages) 
+# Initialise a variable i as 0 (this variable will help us while executing a for loop in the later stages) 
 i = 0
+
+# First we loop through each digit or integer in the list. For each number in the list, we find its multiplier, which is
+# the number that 10 should be raised to the power by for that specific number. The multiplier for a digit is found by taking the length of the list and subtracting
+# it by the position/index number of the digit add one. After finding the multiplier, we can then take the number and multiply it by 10
+# to the power of the multiplier and add the result to the final_number. We do this for each of the numbers in the list to achieve 
+# our final number. We also add 1 to i in each iteration of the list because each digit in the list has different positions/index numbers.
+
+
+# Create a for loop that iterates through the list of digits 
 for number in num_list:
+    # Find the multiplier for the number.
     multiplier = len(num_list) - (i+1)
+    # Add the number times by 10^multiplier to the final number.
     final_number += (number * 10 ** multiplier)
+    # Add 1 to i for each iteration of our loop.
     i+=1
 
 print(final_number)
 
+# The section of code above will output 12234 as an integer which demonstrates that the code works.
 
+# let's test the code for a different list of digits below.
 
+num_list2 = [1,3,6,7,4,4,0]
+final_number2 = 0
 
-    
-    
-        
-            continue
-        if higher_lower(player_guess) == "finished":
-            guessing = "no"
-    conclusion()
+i = 0
+for number in num_list2:
+    multiplier = len(num_list2) - (i+1)
+    final_number += (number * 10 ** multiplier)
+    i+=1
 
-main()
+print(final_number2)
+
+# The section of code above will output 1367440 as an integer which demonstrates that the code works.
