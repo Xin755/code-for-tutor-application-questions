@@ -1,17 +1,63 @@
+Programming Task #2 by Yan Xin Er
+
+A comment at the top of the file introducing how the code works (to a beginner) and why it works (i.e. the intuition).
+- Comment and documentation that explain the purpose of sections/lines of code where appropriate.
+- Code to execute the function, with some examples or test cases demonstrating that it works.
+
+ The purpose of this code is to simulate a game whereby a user/player is supposed to guess a 'secret' number which is an
+integer randomly generated between 1 and 100 inclusive. The number is generated at the start of the game and the player has to
+keep guessing numbers until they reach the secret number. The game ends once the player guessed the secret number. It will also tell the
+player if the secret number is higher or lower than what the player has guessed. For example, if the secret number is 44 and the player
+guesses 33, the player should be told 'higher'. So to start off the program, we first import the 'randint' function from the built-in
+python library called 'random'. This will allow us to generate the secret number the player has to guess. The randint function will
+return a random integer specified in the range you want. In this case, we would do randint(0,100) to generate a number between 0-100
+inclusive.
+
+ The 'introduction' and 'conclusion' functions defined in the code below are just there to print some statements introducing 
+and concluding the game(nothing too difficult about them). The 'guess' function asks the player what their guess is and returns
+an integer type version of the player's guess(because the input() function always returns a string so we need to convert it to int).
+Using the 'try' and 'except' blocks of code in the guess function allow us to manage any invalid inputs the player might enter such as:
+a negative number, a number bigger than 100, a float value, or even an alphabetical string of characters. All these are invalid inputs
+and so our 'guess' function returns None if there is an invalid input. If the 'guess' function returns None, then our program will
+prompt the player to guess again until they enter a valid input.
+ 
+ The next function is our 'higher_lower' function, which takes in the players guess as an input and does 1 of 3 possible things. 
+It tells the player that the secret number is higher if their guess is lower than the secret number or if their guess was higher,
+then our program will say that the secret number is lower. However, if the player guesses the secret number correctly, our 'higher_lower'
+function will print out a statement congratulating the player and return the string "finished". The variable named 'guessing' which is
+initialized as "yes" in our 'main' block of code determines whether our game continues to ask the player for their guess or concludes the
+game. This is because we set the conditional statement for our while loop as being: if the 'guess' variable equals to "yes". If we set
+our 'guessing' variable to anything other than "yes", our game will end and our 'conclusion' function will print a statement thanking
+the player for playing the game.
+
+ In our 'main' block of code, if our 'higher_lower' function returns "finished", we assign the string
+"no" to our 'guessing' variable which in turn concludes the game and executes our 'conclusion' function. Keep in mind that if the player
+guesses incorrectly, our 'guessing' variable will have the "yes" value which means our game will continue to ask the player for their
+guess.
+
+
+# Import the 'randint' function from the 'random' library.
 from random import randint
 
+# Assign the randomly generate number to a variable.
 random_number = randint(0,100)
 
+# Define the introduction function.
 def introduction():
     print("A random integer between 0 and 100 inclusive has been generated")
     print("It is now your turn to guess this secret number!")
     print("Please note that you can only guess integers between 0 and 100 inclusive")
 
+# Define the conclusion function.
 def conclusion():
     print("Thank you for playing!")
 
+# Define the 'guess' function.
 def guess():
+    # Ask the player what their guess is.
     player_guess = input("What is your guess?: ")
+    # If the player's guess or input is invalid, raise errors depending on the invalid input. This will make this function automatically
+    # return None.
     try:
         if player_guess.isnumeric() == False:
             raise TypeError
@@ -26,28 +72,44 @@ def guess():
     except AssertionError:
         print("Remember that your guess can only be between 0 and 100 inclusive, please try again")
         return None
-
+    
+    # If the player's input is valid, return it as an int type.
     return int(player_guess)
 
+# Define the 'higher_lower' function.
 def higher_lower(player_guess):
+    # Print the respective statements based on whether the player's guess is lower or higher than the secret number. 
     if player_guess < random_number:
         print("The secret number is higher")
     elif player_guess > random_number:
         print("The secret number is lower")
+        
+    # If the player's guess matches the secret number, print a statement congratulating them and return the string "finished".
     else:
         print("You have guessed the secret number, congratulations!")
         return "finished"
 
-
+# Define the main function.
 def main():
+    # Execute the introduction function.
     introduction()
+    # Initialize our 'guessing' variable to "yes" to match the conditional statement of our while loop.
     guessing = "yes"
+    # Create a while loop that ends only if the player has guessed the secret number correctly by breaking the conditional statement.
     while guessing == "yes":
+        # Execute the 'guess' function which returns the player's guess.
         player_guess = guess()
+        # 'player_guess' will return None if there is an invalid input. In which case, will 'restart' the while loop.
         if player_guess == None:
             continue
+            
+        # If the player guesses the secret number correctly, break the conditional statement of the while loop by assigning "no" to
+        # our 'guessing' variable.
         if higher_lower(player_guess) == "finished":
             guessing = "no"
+     
+    # Execute the 'conclusion' function.
     conclusion()
 
+# Execute the 'main' function.
 main()
