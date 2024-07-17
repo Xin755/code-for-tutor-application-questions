@@ -1,1 +1,53 @@
+from random import randint
 
+random_number = randint(0,100)
+
+def introduction():
+    print("A random integer between 0 and 100 inclusive has been generated")
+    print("It is now your turn to guess this secret number!")
+    print("Please note that you can only guess integers between 0 and 100 inclusive")
+
+def conclusion():
+    print("Thank you for playing!")
+
+def guess():
+    player_guess = input("What is your guess?: ")
+    try:
+        if player_guess.isnumeric() == False:
+            raise TypeError
+    
+    except TypeError:
+        print("Remember that your guess can only be a positive integer, please try again")
+        return None
+    
+    try:
+        assert int(player_guess) >= 0 and int(player_guess) <= 100
+
+    except AssertionError:
+        print("Remember that your guess can only be between 0 and 100 inclusive, please try again")
+        return None
+
+    return int(player_guess)
+
+def higher_lower(player_guess):
+    if player_guess < random_number:
+        print("The secret number is higher")
+    elif player_guess > random_number:
+        print("The secret number is lower")
+    else:
+        print("You have guessed the secret number, congratulations!")
+        return "finished"
+
+
+def main():
+    introduction()
+    guessing = "yes"
+    while guessing == "yes":
+        player_guess = guess()
+        if player_guess == None:
+            continue
+        if higher_lower(player_guess) == "finished":
+            guessing = "no"
+    conclusion()
+
+main()
